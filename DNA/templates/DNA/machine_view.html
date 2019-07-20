@@ -1,0 +1,236 @@
+{% extends 'base-menu.html' %}
+{% block content %}
+
+
+
+
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">Editar de Máquina</h3>  
+      {% if messages %}     
+      <div class="modal  fade" id="modal-danger">
+                <div class="modal-dialog">                        
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title text-danger">DNA_AUTOMATION</h4>
+                    </div>
+                    <div class="modal-body">
+                                <ul class="messages">
+                   {% for message in messages %}
+                        
+                        <li{% if message.tags %} class="alert-{{ message.tags }}"{% endif %}>{{ message }}</li>                                
+                       
+                 {% endfor %}
+                </ul>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+                    </div>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>       
+      {% endif %}    
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+   
+    <form role="form" action="submit" method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+        <input type=hidden  class="form-control" name="machine-id" value="{{machine.id}}"  aria-hidden="true" />
+      <div class="box-body">
+        <div class="form-group" >
+            <div class="row">
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Nome da Máquina<span class="text-danger"> * Obrigatorio</span></label>
+                            <input type="text" name="name-maquina" class="form-control" id="exampleInputEmail1"  value="{{machine.nameMachine}}" />
+                    </div>
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Descrição Completa<span class="text-danger"> * Obrigatorio</span></label>
+                            <textarea type="text" name="descricao" class="form-control" id="exampleInputEmail1" >{{machine.descriptionMachine}}</textarea>
+                    </div>
+
+            </div>
+        </div>
+        <div class="form-group" >
+            <div class="row">
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Calibração</label>
+                            <textarea type="text" name="calibracao" class="form-control" id="exampleInputEmail1" >{{machine.calibration}}</textarea>
+                    </div>
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Cidade</label>
+                            <input type="text" name="cidade" class="form-control" id="exampleInputEmail1" value="{{machine.city}}">
+                    </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Fabrica</label>
+                            <input type="text" name="fabrica" class="form-control" id="exampleInputEmail1" value="{{machine.factory}}">
+                    </div>
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Grupo</label>
+                            <input type="text" name="grupo" class="form-control" id="exampleInputEmail1" value="{{machine.group}}">
+                    </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Setor<span class="text-danger"> * Obrigatorio</span></label>
+                            <input type="text" name="setor" class="form-control" id="exampleInputEmail1" value="{{machine.sector}}">
+                    </div>
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Sub Grupo<span class="text-danger"> * Obrigatorio</span></label>
+                            <input type="text" name="subgrupo" class="form-control" id="exampleInputEmail1" value="{{machine.subGroup}}">
+                    </div>
+                </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Situação <span class="text-danger"> * Obrigatorio</span></label>
+                            <input type="text" name="situacao" class="form-control" id="exampleInputEmail1" value="{{machine.situation}}">
+                    </div>
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Fabricante</label>
+                            <input type="text" name="fabricante" class="form-control" id="exampleInputEmail1" value="{{machine.manoFacture}}">
+                    </div>
+            </div>               
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Identificação / TAG <span class="text-danger"> * Obrigatorio</span></label>
+                            <input type="text" name="tag" class="form-control" id="exampleInputEmail1" value="{{machine.identificationTag}}">
+                    </div>
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">N° de Série</label>
+                            <input type="text" name="serie" class="form-control" id="exampleInputEmail1" value="{{machine.serialNumber}}">
+                    </div>
+            </div>              
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Número de Fabricação</label>
+                            <input type="text" name="numero-fabricacao" class="form-control" id="exampleInputEmail1" value="{{machine.numberManofacturing}}">
+                    </div>
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">N° da NF</label>
+                            <input type="text" name="nf" class="form-control" id="exampleInputEmail1" value="{{machine.numberInvoice}}">
+                    </div>
+
+            </div>               
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Modelo</label>
+                            <input type="text" name="modelo" class="form-control" id="exampleInputEmail1" value="{{machine.model}}">
+                    </div>
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">N° de Patrimônio</label>
+                            <input type="text" name="patrimonio" class="form-control" id="exampleInputEmail1" value="{{machine.numberPatrimony}}">
+                    </div>
+
+            </div>               
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Garantia</label>
+                            <input type="text" name="garantia" class="form-control" id="exampleInputEmail1" value="{{machine.warranty}}">
+                    </div>
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Responsável</label>
+                            <input type="text" name="responsavel" class="form-control" id="exampleInputEmail1" value="{{machine.responsible}}">
+                    </div>
+
+            </div>               
+        </div>
+        <div class="form-group">
+            <div class="row">
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">E-mail</label>
+                            <input type="email" name="e-mail" class="form-control" id="exampleInputEmail1" value="{{machine.email}}">
+                    </div>
+                    <div class="col-md-6">
+                            <label for="exampleInputEmail1">Data de Cadastro <span class="text-danger"> * Obrigatorio</span></label>
+                            <input type="date" name="data" class="form-control" id="exampleInputEmail1" value="{{machine.registrationDate}}">
+                    </div>
+
+            </div>   
+        </div>
+
+        
+
+      
+      
+      </div>
+      <div class="box-footer">
+        <button type="submit" class="btn btn-lg btn-primary">Alterar</button>
+        <div class="form-group">
+                <label for="exampleInputFile">Selecionar Arquivos</label>
+                <input type="file" name="files" id="exampleInputFile" multiple='multiple'/>         
+        </div>
+        
+      </div>      
+    </form>
+  </div>  
+
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+                {% for image in images %}
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title=""
+                   data-image="{{image.image.url}}"
+                   data-target="#image-gallery">
+                    <img style="width: 200px; height:200px;" class="img-thumbnail"
+                         src="{{image.image.url}}"
+                         alt="Another alt text">
+                </a>
+            </div>
+            {%endfor%}
+
+        <div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="image-gallery-title"></h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="image-gallery-image" class="img-responsive col-md-12" src="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary float-left" id="show-previous-image"><i class="fa fa-arrow-left"></i>
+                        </button>
+
+                        <button type="button" id="show-next-image" class="btn btn-secondary float-right"><i class="fa fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+  
+{% endblock %}

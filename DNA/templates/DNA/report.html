@@ -1,0 +1,152 @@
+{%extends 'base-menu.html'%}
+
+{% block content %}
+<div class="box">
+    <div class="box-header">
+      <h3 class="box-title">Relatório Geral Máquinas - Cadastradas</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+        <div class="row">
+            <form id="search-form" action="" method="POST"> 
+                {%csrf_token%}
+          <div class="col-sm-4">
+          <div class="dataTables_length" id="example1_length">
+             
+            <label>N°                           
+               <select name="paginator" aria-controls="example1" class="form-control input-sm">                 
+               <option value="10" selected="selected">10</option>
+               <option value="25">25</option>               
+               <option value="50">50</option>
+               <option value="100">100</option>
+              </select>
+              Registro a Exibir.
+              </label>
+              <button type="submit"  class ="btn btn-success" value="Filtrar">Filtrar</button>
+            
+            </div>
+          </div>
+         
+          <div class="col-sm-4">
+            <div id="example1_filter" class="dataTables_filter">
+            <label>Buscar:</label>
+              <input type="search" name="search" class="form-control input-sm" value="{{request.POST.search}}" aria-controls="example1"/>
+              <button class="btn btn-search"><i class="fa fa-search" id="search-btn"></i></button>
+            
+          </div>
+        </div>
+      </form>
+      <div class="col-sm-4">
+        <div id="example1_filter" class="dataTables_filter">
+        <label>Exportar Todas as Máquinas:</label>
+        <a href="/dna/dashboard/report/all_csv/">
+          <button class="btn btn-success"><i class="fa fa-file-excel-o" id="search-btn"></i></button>
+          </a>
+        
+      </div>
+    </div>
+      </div>
+
+
+      
+        
+
+      <div class="row">
+        <div class="col-sm-12">
+        <table id="example1" class="table table-bordered table-responsive table-striped dataTable" role="grid" aria-describedby="example1_info">
+        <thead>
+
+        <tr role="row">
+          <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 430px;">Nome da Máquina</th>
+          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 519px;">Cidade</th>
+          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 465px;">Fábrica</th>
+          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 373px;">Grupo</th>
+          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 280px;">Subgrupo</th>
+          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 280px;">Fabricante</th>
+          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 280px;">Tag</th>
+          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 280px;">Visualizar</th> 
+          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 280px;">Excel</th>
+          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 280px;">Deletar</th>
+        </tr>
+        </tr>
+        </thead>
+        <tbody>
+        {%for report in reportList%}
+          <tr role="row" class="odd"> 
+            <td class="sorting_1">{{report.nameMachine}}</td>
+            <td>{{report.city}}</td>
+            <td>{{report.factory}}</td>
+            <td>{{report.group}}</td>
+            <td>{{report.subGroup}}</td>           
+            <td>{{report.identificationTag}}</td>
+            <td>{{report.responsible}}</td>
+
+            
+            <td> <a  href="/dna/dashboard/report/machine_view/?id={{report.id}}"><button class="btn btn-search"><i class="fa fa-search" id="search-btn"></i></button></a></td>
+           
+            <td><a href="/dna/dashboard/report/csv/?id={{report.id}}"><button type="button" class="btn btn-success" ><span><i class="fa fa-file-excel-o"></i></span></button></a></td>
+            <td><a href="#"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_confirm"><span><i class="fa fa-trash"></i></span></button></a></td>
+
+          </tr>
+          <div class="modal fade modal" tabindex="-1" id="modal_confirm" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">DNA AUTOMATION</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h3> {{request.user.get_full_name}}, você deja excluir este item?</h3>
+                </div>
+                <div class="modal-footer">                 
+                  <a href="/dna/dashboard/delete/?id={{report.id}}">
+                    <button type="button" class="btn btn-danger" >EXCLUIR</button>
+                  </a>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        {%endfor%}
+      </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-5">
+      <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Total de Máquinas Cadastradas
+
+      </div>
+    </div>
+    <div class="col-sm-7">
+      <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+        <ul class="pagination">
+        {%if reportList.has_previous%}
+        <li class="paginate_button previous " id="example1_previous">
+          <a href="?page={{reportList.previous_page_number}}" aria-controls="example1" data-dt-idx="0" tabindex="0">Anterior</a>
+        </li>
+        {%endif%}
+        {%if reportlist.paginator.num_pages%}
+          <li class="paginate_button active">
+              <a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">{{reportList.number}} de {{reportList.paginator.num_pages}}</a>
+          </li>
+          {%endif%}
+            {%if reportList.has_next%}
+           <li class="paginate_button next" id="example1_next"> <a href="?page={{reportList.next_page_number}}" aria-controls="example1" data-dt-idx="7" tabindex="0">Próxima</a></li>
+            {%endif%}
+          
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+    <!-- /.box-body -->
+  </div>
+
+{%endblock%}

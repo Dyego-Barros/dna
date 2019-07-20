@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+
+{%block image-1%}
+{% for profile in profiles %}
+<img src="{{profile.image.url}}" class="img-circle" alt="User Image">
+{% endfor %}
+{%endblock%}
+
+
+{%block image-menu%}
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <!-- The user image in the navbar-->
+    {% for profile in profiles %}
+    <img src="{{profile.image.url}}" class="user-image" alt="User Image">
+    {% endfor %}
+    <!-- hidden-xs hides the username on small devices so only the image appears. -->
+    <span class="hidden-xs">{{request.user.get_full_name}}</span>
+  </a>
+  <ul class="dropdown-menu">
+    <!-- The user image in the menu -->
+    <li class="user-header">
+{%endblock%}
+
+
+{%block menu%}
+{% for profile in profiles %}
+<img src="{{profile.image.url}}" class="img-circle" alt="User Image">
+{% endfor %}  
+
+<p>{{request.user.get_full_name}}  -    {% for profile in profiles %}
+        {{profile.function}}
+      {% endfor %}               
+      </p>
+      <p><small>Logado {% now "SHORT_DATETIME_FORMAT" %}</small></p>
+
+{%endblock%}
